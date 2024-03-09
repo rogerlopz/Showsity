@@ -1,34 +1,91 @@
-import {FlatList, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import SeriesPosterItem from './SeriesPosterItem.tsx';
 import {useGetShowsBySearchQuery} from '../../services/shows.ts';
+import React from 'react';
 
-export default function SeriesSearchResults({searchText}) {
+type SeriesSearchResultsProps = {
+  searchText: string;
+};
+const SeriesSearchResults: React.FC<SeriesSearchResultsProps> = ({
+  searchText,
+}) => {
   const {data, isLoading, isError} = useGetShowsBySearchQuery(searchText);
 
   if (isLoading) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Searching shows...</Text>
+      <View style={styles.centeredContainer}>
+        <ActivityIndicator color="white" size={30} />
+        <Text style={[styles.text, styles.seriesStateText]}>
+          Searching for shows...
+        </Text>
       </View>
     );
   }
 
   if (isError) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Whoops, looks like something went wrong. Try refreshing</Text>
+      <View style={styles.centeredContainer}>
+        <Text style={[styles.text, styles.seriesStateText]}>
+          Whoops, looks like something went wrong. Try refreshing
+        </Text>
       </View>
     );
   }
 
   return (
-    <FlatList
-      data={data}
-      numColumns={2}
-      ListEmptyComponent={<Text>No results found.</Text>}
-      renderItem={({item}) => (
-        <SeriesPosterItem show={item.show} key={item.show.name} />
-      )}
-    />
+    <View style={styles.searchResultContainer}>
+      <FlatList
+        data={data}
+        contentContainerStyle={styles.listContainer}
+        numColumns={2}
+        ListEmptyComponent={
+          <View style={styles.centeredContainer}>
+            <Text style={[styles.text, styles.emptyResultText]}>
+              No results found
+            </Text>
+          </View>
+        }
+        renderItem={({item}) => (
+          <SeriesPosterItem show={item.show} key={item.show.name} />
+        )}
+      />
+    </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  centeredContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchResultContainer: {
+    flex: 1,
+    flexGrow: 1,
+    backgroundColor: '#504945',
+  },
+  listContainer: {
+    flexGrow: 1,
+    paddingTop: 16,
+    paddingBottom: 64,
+  },
+  text: {
+    color: '#fff',
+  },
+  seriesStateText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  emptyResultText: {
+    fontSize: 32,
+    fontWeight: 'bold',
+  },
+});
+
+export default SeriesSearchResults;

@@ -21,10 +21,6 @@ function SeriesSeasonList({seasons}: {seasons: []}) {
     setEpisode(null);
   }
 
-  function collapseEpisodeList() {
-    console.log('ayy');
-  }
-
   return (
     <View style={styles.container}>
       {seasons.map(({season, episodes}, index) => (
@@ -56,7 +52,7 @@ const styles = StyleSheet.create({
   seasonTitle: {
     fontSize: 32,
     color: 'white',
-    marginTop: 16,
+    marginTop: 8,
     marginBottom: 8,
   },
 });

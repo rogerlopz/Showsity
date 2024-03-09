@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   Image,
   ScrollView,
@@ -8,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import {useGetShowByIdQuery} from '../../services/shows.ts';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import HTMLView from 'react-native-htmlview';
 import SeriesSeasonList from '../../components/showDetails/SeriesSeasonList.tsx';
 import GenrePillList from '../../components/GenrePillList.tsx';
@@ -17,22 +18,30 @@ import {StarIcon} from 'react-native-heroicons/solid';
 const viewHeight: number = Dimensions.get('window').height;
 function SeriesDetailsScreen(): React.JSX.Element {
   const route = useRoute();
+  const navigation = useNavigation();
   const {data, isLoading, isError} = useGetShowByIdQuery(route.params.seriesId);
 
   if (isLoading) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Loading show details...</Text>
+      <View style={styles.centerContainer}>
+        <ActivityIndicator color="white" size={30} />
+        <Text style={styles.text}>Loading show details...</Text>
       </View>
     );
   }
 
   if (isError) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Whoops, looks like something went wrong. Try refreshing</Text>
+      <View style={styles.centerContainer}>
+        <Text style={styles.text}>
+          Whoops, looks like something went wrong. Try refreshing
+        </Text>
       </View>
     );
+  }
+
+  if (data) {
+    navigation.setOptions({title: data.name || ''});
   }
 
   return (
@@ -51,31 +60,24 @@ function SeriesDetailsScreen(): React.JSX.Element {
         <View style={styles.ratingsContainer}>
           <StarIcon color="#f5c518" size={30} />
 
-          <Text style={styles.ratingText}>{data.rating.average}/10</Text>
+          <Text style={styles.ratingText}>{data.rating.average || 0}/10</Text>
         </View>
 
         <GenrePillList genres={data.genres} />
 
-        <View
-          style={{
-            flexDirection: 'row',
-            marginVertical: 8,
-            marginHorizontal: 8,
-            justifyContent: 'space-between',
-          }}>
-          <Text style={{color: 'white', fontSize: 18}}>
-            At {data.schedule.time} on {data.schedule.days.join(', ')}
-          </Text>
+        <Text style={styles.text}>
+          At {data.schedule.time} on {data.schedule.days.join(', ')}
+        </Text>
 
-          <Text style={{color: 'white', fontSize: 18}}>
-            Seasons: {data.totalSeasons} Episodes:
-            {data.totalEpisodes}
-          </Text>
+        <Text style={styles.text}>
+          {`Seasons: ${data.totalSeasons} Episodes: ${data.totalEpisodes}`}
+        </Text>
+
+        <View style={styles.summaryContent}>
+          <Text style={styles.subTitle}>Summary</Text>
+
+          <HTMLView value={data.summary} stylesheet={styles} />
         </View>
-
-        <Text style={styles.subTitle}>Summary</Text>
-
-        <HTMLView value={data.summary} stylesheet={styles} />
 
         <Text style={styles.subTitle}>Episodes</Text>
 
@@ -88,12 +90,19 @@ function SeriesDetailsScreen(): React.JSX.Element {
 export default SeriesDetailsScreen;
 
 const styles = StyleSheet.create({
+  centerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#282828',
+  },
   detailsContainer: {
     backgroundColor: '#282828',
     paddingHorizontal: 8,
   },
   showInfoContainer: {
-    padding: 8,
+    paddingHorizontal: 8,
+    marginBottom: 64,
   },
   ratingsContainer: {
     flexDirection: 'row',
@@ -105,6 +114,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 4,
   },
+  text: {
+    color: 'white',
+    fontSize: 18,
+  },
   showImageBackground: {
     height: viewHeight / 2,
   },
@@ -112,6 +125,15 @@ const styles = StyleSheet.create({
     fontSize: 48,
     color: 'white',
     fontWeight: 'bold',
+  },
+  summaryContent: {
+    backgroundColor: '#504945',
+    borderRadius: 16,
+    marginTop: 24,
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 32,
+    marginBottom: 16,
   },
   p: {
     color: 'white',
@@ -121,7 +143,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: 'white',
     fontWeight: 'bold',
-    marginTop: 24,
     marginBottom: 8,
   },
 });

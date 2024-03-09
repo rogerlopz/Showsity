@@ -14,7 +14,20 @@ export default function AppNavigation() {
           options={{headerShown: false}}
         />
 
-        <Stack.Screen name="ShowDetails" component={SeriesDetailsScreen} />
+        <Stack.Screen
+          name="ShowDetails"
+          component={SeriesDetailsScreen}
+          options={{
+            title: '',
+            headerStyle: {
+              backgroundColor: '#504945',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

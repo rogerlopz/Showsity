@@ -40,6 +40,7 @@ function EpisodeList({episodes, onEpisodePress}) {
 const styles = StyleSheet.create({
   episodeContainer: {
     maxWidth: 170,
+    minWidth: 170,
     height: 160,
     maxHeight: 200,
   },

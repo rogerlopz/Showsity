@@ -1,16 +1,15 @@
-import {
-  Button,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import {useState} from 'react';
 import SeriesSearchResults from './SeriesSearchResults.tsx';
 import useDebounce from '../../hooks/useDebounce.tsx';
 import {ArrowLeftIcon} from 'react-native-heroicons/outline';
 
-export default function SearchSeriesList({onSearchToggled}) {
+type SearchSeriesListProps = {
+  onSearchToggled(toggleStatus: boolean): void;
+};
+const SearchSeriesList: React.FC<SearchSeriesListProps> = ({
+  onSearchToggled,
+}) => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState('');
   const debouncedSearch = useDebounce(searchText, 500);
@@ -37,8 +36,9 @@ export default function SearchSeriesList({onSearchToggled}) {
       <TouchableOpacity
         onPress={() => {
           toggleSearch(false);
-        }}>
-        <ArrowLeftIcon color="black" />
+        }}
+        style={styles.backButton}>
+        <ArrowLeftIcon color="white" size={24} />
       </TouchableOpacity>
     );
   }
@@ -52,33 +52,54 @@ export default function SearchSeriesList({onSearchToggled}) {
   }
 
   return (
-    <View>
+    <>
       <View style={styles.searchInputContainer}>
-        {renderBackButton()}
+        <View style={styles.searchRow}>
+          {renderBackButton()}
 
-        <TextInput
-          style={styles.searchInput}
-          value={searchText}
-          placeholderTextColor="#000"
-          placeholder="Search by TV Show name"
-          onPressIn={() => toggleSearch(true)}
-          onChangeText={searchShow}
-        />
+          <TextInput
+            style={styles.searchInput}
+            value={searchText}
+            placeholderTextColor="#fff"
+            placeholder="Search by TV Show name"
+            onPressIn={() => toggleSearch(true)}
+            onChangeText={searchShow}
+          />
+        </View>
       </View>
 
       {renderSearchList()}
-    </View>
+    </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   searchInputContainer: {
-    margin: 8,
+    padding: 8,
+    backgroundColor: '#282828',
+    height: 70,
+  },
+  searchRow: {
     flexDirection: 'row',
     borderWidth: 1,
     alignItems: 'center',
+    backgroundColor: '#504945',
+    borderRadius: 32,
+    paddingHorizontal: 4,
+  },
+  backButton: {
+    marginLeft: 8,
   },
   searchInput: {
     flex: 1,
+    paddingLeft: 16,
+    color: 'white',
+    fontSize: 18,
+  },
+  searchListContainer: {
+    height: '100%',
+    backgroundColor: '#504945',
   },
 });
+
+export default SearchSeriesList;

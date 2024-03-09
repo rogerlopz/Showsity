@@ -7,8 +7,8 @@ function GenrePillList({genres}: {genres: string[]}) {
 
   return (
     <View style={styles.container}>
-      {genres.map(genre => (
-        <View style={styles.genreContainer}>
+      {genres.map((genre, index) => (
+        <View style={styles.genreContainer} key={`${genre}_${index}`}>
           <Text style={styles.genreTitle}>{genre}</Text>
         </View>
       ))}
@@ -28,12 +28,13 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     height: 30,
     paddingHorizontal: 8,
-    paddingVertical: 4,
     width: 'auto',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   genreTitle: {
     color: '#1d4ed8',
-    fontSize: 14,
+    fontSize: 16,
   },
 });
 

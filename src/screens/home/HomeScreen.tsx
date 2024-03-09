@@ -1,4 +1,3 @@
-import {StyleSheet, View} from 'react-native';
 import {useState} from 'react';
 import SeriesList from '../../components/home/SeriesList.tsx';
 import SearchSeriesList from '../../components/home/SearchSeriesList.tsx';

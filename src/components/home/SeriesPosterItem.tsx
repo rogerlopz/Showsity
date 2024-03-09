@@ -1,5 +1,4 @@
 import {
-  Image,
   ImageBackground,
   StyleSheet,
   Text,
@@ -8,7 +7,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-export default function SeriesPosterItem({show}: {show: any}) {
+const SeriesPosterItem: React.FC<any> = ({show}) => {
   const navigation = useNavigation();
   const goToShowDetails = () => {
     navigation.navigate('ShowDetails', {seriesId: show.id});
@@ -26,12 +25,13 @@ export default function SeriesPosterItem({show}: {show: any}) {
       </ImageBackground>
     </TouchableOpacity>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
   },
   backgroundPoster: {
     width: '100%',
@@ -45,15 +45,19 @@ const styles = StyleSheet.create({
   seriesTitle: {
     marginLeft: 16,
     marginBottom: 16,
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: {width: 1, height: 2},
+    textShadowRadius: 4,
   },
   titleBlur: {
     minHeight: 50,
-    backgroundColor: '#000',
-    opacity: 0.8,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     borderBottomStartRadius: 16,
     borderBottomEndRadius: 16,
   },
 });
+
+export default SeriesPosterItem;

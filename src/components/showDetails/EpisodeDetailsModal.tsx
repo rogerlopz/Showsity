@@ -1,6 +1,15 @@
 import React from 'react';
-import {Modal, StyleSheet, Text, View, Image, Button} from 'react-native';
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import HTMLView from 'react-native-htmlview';
+import {XCircleIcon} from 'react-native-heroicons/solid';
 
 const EpisodeDetailsModal = ({episode, modalVisible, onCloseModal}) => {
   if (!episode) {
@@ -10,25 +19,36 @@ const EpisodeDetailsModal = ({episode, modalVisible, onCloseModal}) => {
   return (
     <Modal
       transparent={true}
-      animationType="slide"
+      animationType="fade"
       visible={modalVisible}
       onRequestClose={() => {
         onCloseModal();
       }}>
       <View style={styles.container}>
-        <Image
-          style={styles.episodeImage}
-          resizeMode="contain"
-          src={episode.image.original}
-        />
+        <View style={styles.modalContent}>
+          <Image
+            style={styles.episodeImage}
+            resizeMode="cover"
+            src={episode.image?.original}
+          />
+          <Text style={[styles.text, styles.episodeTitle]}>{episode.name}</Text>
 
-        <View style={styles.content}>
-          <Text style={{color: 'black'}}>{episode.name}</Text>
-          <Text style={{color: 'black'}}>Episode {episode.number}</Text>
-          <Text style={{color: 'black'}}>Season {episode.season}</Text>
-          <HTMLView value={episode.summary} stylesheet={styles} />
+          <ScrollView contentContainerStyle={styles.content}>
+            <Text
+              style={[
+                styles.text,
+                styles.seasonsText,
+              ]}>{`Episode ${episode.number} Season ${episode.season}`}</Text>
+
+            <HTMLView value={episode.summary} stylesheet={styles} />
+          </ScrollView>
+
+          <TouchableOpacity
+            onPress={() => onCloseModal()}
+            style={styles.closeModalButton}>
+            <XCircleIcon size={40} color="white" />
+          </TouchableOpacity>
         </View>
-        <Button onPress={() => onCloseModal()} title="Close" />
       </View>
     </Modal>
   );
@@ -37,21 +57,48 @@ const EpisodeDetailsModal = ({episode, modalVisible, onCloseModal}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 32,
-    marginVertical: 72,
-    backgroundColor: 'white',
-    alignItems: 'flex-start',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  episodeImage: {
-    width: '100%',
-    height: 200,
+  closeModalButton: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+  },
+  modalContent: {
+    position: 'relative',
+    backgroundColor: '#504945',
+    borderRadius: 18,
+    marginHorizontal: 32,
+    maxHeight: 600,
   },
   content: {
-    flex: 1,
-    padding: 16,
+    marginHorizontal: 18,
+    marginVertical: 8,
+    paddingBottom: 64,
+  },
+  episodeImage: {
+    width: 'auto',
+    height: 200,
+    borderRadius: 16,
+  },
+  text: {
+    color: 'white',
+  },
+  seasonsText: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  episodeTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginTop: 8,
+    marginHorizontal: 12,
   },
   p: {
-    color: 'black',
+    color: 'white',
+    fontSize: 18,
   },
 });
 
