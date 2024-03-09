@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Modal,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Button,
-} from 'react-native';
+import {Modal, StyleSheet, Text, View, Image, Button} from 'react-native';
 import HTMLView from 'react-native-htmlview';
 
 const EpisodeDetailsModal = ({episode, modalVisible, onCloseModal}) => {
@@ -30,10 +23,10 @@ const EpisodeDetailsModal = ({episode, modalVisible, onCloseModal}) => {
         />
 
         <View style={styles.content}>
-          <Text>{episode.name}</Text>
-          <Text>Episode {episode.number}</Text>
-          <Text>Season {episode.season}</Text>
-          <HTMLView value={episode.summary} />
+          <Text style={{color: 'black'}}>{episode.name}</Text>
+          <Text style={{color: 'black'}}>Episode {episode.number}</Text>
+          <Text style={{color: 'black'}}>Season {episode.season}</Text>
+          <HTMLView value={episode.summary} stylesheet={styles} />
         </View>
         <Button onPress={() => onCloseModal()} title="Close" />
       </View>
@@ -56,6 +49,9 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 16,
+  },
+  p: {
+    color: 'black',
   },
 });
 

@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {useGetShowQuery} from '../../services/shows.ts';
+import {useGetShowByIdQuery} from '../../services/shows.ts';
 import {useRoute} from '@react-navigation/native';
 import HTMLView from 'react-native-htmlview';
 import ShowSeasonsList from '../../components/showDetails/ShowSeasonsList.tsx';
@@ -15,7 +15,8 @@ import ShowSeasonsList from '../../components/showDetails/ShowSeasonsList.tsx';
 const viewHeight: number = Dimensions.get('window').height;
 function ShowDetailsScreen(): React.JSX.Element {
   const route = useRoute();
-  const {data, isLoading, isError} = useGetShowQuery(route.params.seriesId);
+  console.log('Loading show: ', route.params);
+  const {data, isLoading, isError} = useGetShowByIdQuery(route.params.seriesId);
 
   if (isLoading) {
     return (
@@ -46,20 +47,20 @@ function ShowDetailsScreen(): React.JSX.Element {
       <View style={styles.showInfoContainer}>
         <Text style={styles.showTitle}>{data.name}</Text>
 
-        <Text>
+        <Text style={{color: 'black'}}>
           At {data.schedule.time} on {data.schedule.days.join(', ')}
         </Text>
 
-        <Text>{data.genres.join(', ')}</Text>
+        <Text style={{color: 'black'}}>{data.genres.join(', ')}</Text>
 
-        <Text>
+        <Text style={{color: 'black'}}>
           Seasons: {data.totalSeasons} Episodes:
           {data.totalEpisodes}
         </Text>
 
-        <HTMLView value={data.summary} />
+        <HTMLView value={data.summary} stylesheet={styles} />
 
-        <Text>Episodes</Text>
+        <Text style={{color: 'black'}}>Episodes</Text>
 
         <ShowSeasonsList seasons={data.seasons} />
       </View>
@@ -78,5 +79,9 @@ const styles = StyleSheet.create({
   },
   showTitle: {
     fontSize: 48,
+    color: 'black',
+  },
+  p: {
+    color: 'black',
   },
 });

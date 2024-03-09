@@ -5,7 +5,7 @@ export const showsApi = api.injectEndpoints({
     getShows: builder.query({
       query: (page = 0) => `/shows?page=${page}`,
     }),
-    getShow: builder.query({
+    getShowById: builder.query({
       query: showId => `/shows/${showId}?embed[]=seasons&embed[]=episodes`,
       transformResponse: (response: any) => {
         const seasons = response._embedded.seasons;
@@ -29,7 +29,11 @@ export const showsApi = api.injectEndpoints({
         };
       },
     }),
+    getShowsBySearch: builder.query({
+      query: search => `/search/shows?q=${encodeURI(search)}`,
+    }),
   }),
 });
 
-export const {useGetShowsQuery, useGetShowQuery} = showsApi;
+export const {useGetShowsQuery, useGetShowByIdQuery, useGetShowsBySearchQuery} =
+  showsApi;

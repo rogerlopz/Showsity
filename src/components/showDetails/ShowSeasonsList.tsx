@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   },
   seasonTitle: {
     fontSize: 24,
+    color: 'black',
   },
 });
 

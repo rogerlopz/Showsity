@@ -11,14 +11,14 @@ function EpisodeList({episodes, onEpisodePress}) {
           }}>
           <View style={styles.episodeContainer}>
             <Image
-              src={episode.image.medium}
+              src={episode.image?.medium}
               resizeMode="contain"
               style={styles.episodeImage}
             />
 
-            <Text>Ep. {episode.number}</Text>
+            <Text style={{color: 'black'}}>Ep. {episode.number}</Text>
 
-            <Text>{episode.name}</Text>
+            <Text style={{color: 'black'}}>{episode.name}</Text>
           </View>
         </TouchableHighlight>
       ))}

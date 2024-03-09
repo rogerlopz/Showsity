@@ -1,11 +1,4 @@
-import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, Text, TouchableHighlight} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 export default function ShowListItem({show}: {show: any}) {
@@ -18,7 +11,7 @@ export default function ShowListItem({show}: {show: any}) {
     <TouchableHighlight style={styles.container} onPress={goToShowDetails}>
       <>
         <Image
-          src={show.image.medium}
+          src={show.image?.medium}
           resizeMode="contain"
           style={styles.imageBackground}
         />
