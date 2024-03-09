@@ -1,5 +1,5 @@
 import {FlatList, Text, View} from 'react-native';
-import ShowListItem from './ShowListItem.tsx';
+import SeriesPosterItem from './SeriesPosterItem.tsx';
 import {useGetShowsBySearchQuery} from '../../services/shows.ts';
 
 export default function SeriesSearchResults({searchText}) {
@@ -27,7 +27,7 @@ export default function SeriesSearchResults({searchText}) {
       numColumns={2}
       ListEmptyComponent={<Text>No results found.</Text>}
       renderItem={({item}) => (
-        <ShowListItem show={item.show} key={item.show.name} />
+        <SeriesPosterItem show={item.show} key={item.show.name} />
       )}
     />
   );

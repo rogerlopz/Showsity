@@ -1,9 +1,9 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import EpisodeList from './EpisodeList.tsx';
 import EpisodeDetailsModal from './EpisodeDetailsModal.tsx';
 import {useState} from 'react';
 
-function ShowSeasonsList({seasons}: {seasons: []}) {
+function SeriesSeasonList({seasons}: {seasons: []}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [episode, setEpisode] = useState(null);
 
@@ -19,6 +19,10 @@ function ShowSeasonsList({seasons}: {seasons: []}) {
   function handleModalClose() {
     setModalVisible(false);
     setEpisode(null);
+  }
+
+  function collapseEpisodeList() {
+    console.log('ayy');
   }
 
   return (
@@ -50,9 +54,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   seasonTitle: {
-    fontSize: 24,
-    color: 'black',
+    fontSize: 32,
+    color: 'white',
+    marginTop: 16,
+    marginBottom: 8,
   },
 });
 
-export default ShowSeasonsList;
+export default SeriesSeasonList;

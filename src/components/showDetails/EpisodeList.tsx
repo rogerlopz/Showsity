@@ -1,38 +1,63 @@
-import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 function EpisodeList({episodes, onEpisodePress}) {
   return (
-    <View>
-      {episodes.map((episode, index) => (
-        <TouchableHighlight
-          key={`${episode.name}_${index}`}
+    <FlatList
+      data={episodes}
+      horizontal
+      ItemSeparatorComponent={() => <View style={{width: 16}}></View>}
+      renderItem={({item}) => (
+        <TouchableOpacity
+          key={`${item.name}`}
+          style={styles.episodeContainer}
           onPress={() => {
-            onEpisodePress(episode);
+            onEpisodePress(item);
           }}>
-          <View style={styles.episodeContainer}>
+          <View style={styles.episodeInformation}>
             <Image
-              src={episode.image?.medium}
-              resizeMode="contain"
+              src={item.image?.medium}
+              resizeMode="cover"
               style={styles.episodeImage}
             />
 
-            <Text style={{color: 'black'}}>Ep. {episode.number}</Text>
-
-            <Text style={{color: 'black'}}>{episode.name}</Text>
+            <Text style={styles.episodeName}>
+              Ep.{item.number} {item.name}
+            </Text>
           </View>
-        </TouchableHighlight>
-      ))}
-    </View>
+        </TouchableOpacity>
+      )}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   episodeContainer: {
-    flexDirection: 'row',
+    maxWidth: 170,
+    height: 160,
+    maxHeight: 200,
+  },
+  episodeInformation: {
+    flex: 1,
+    flexDirection: 'column',
   },
   episodeImage: {
-    height: 146,
-    width: 140,
+    height: 100,
+    width: 160,
+    borderRadius: 16,
+    alignSelf: 'flex-start',
+  },
+  episodeName: {
+    paddingHorizontal: 4,
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

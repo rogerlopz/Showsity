@@ -1,7 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from '../screens/home/HomeScreen.tsx';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import ShowDetailsScreen from '../screens/series/ShowDetailsScreen.tsx';
+import SeriesDetailsScreen from '../screens/series/SeriesDetailsScreen.tsx';
 
 const Stack = createNativeStackNavigator();
 export default function AppNavigation() {
@@ -14,7 +14,7 @@ export default function AppNavigation() {
           options={{headerShown: false}}
         />
 
-        <Stack.Screen name="ShowDetails" component={ShowDetailsScreen} />
+        <Stack.Screen name="ShowDetails" component={SeriesDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

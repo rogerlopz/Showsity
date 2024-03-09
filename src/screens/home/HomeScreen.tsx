@@ -1,18 +1,20 @@
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useState} from 'react';
-import ShowList from '../../components/home/ShowList.tsx';
-import SearchShowList from '../../components/home/SearchShowList.tsx';
+import SeriesList from '../../components/home/SeriesList.tsx';
+import SearchSeriesList from '../../components/home/SearchSeriesList.tsx';
 
-export default function HomeScreen() {
+function HomeScreen() {
   const [isSearchingShow, setIsSearchingShow] = useState(false);
 
   return (
-    <View>
-      <SearchShowList
+    <>
+      <SearchSeriesList
         onSearchToggled={toggleStatus => setIsSearchingShow(toggleStatus)}
       />
 
-      <ShowList isSearching={isSearchingShow} />
-    </View>
+      <SeriesList isSearching={isSearchingShow} />
+    </>
   );
 }
+
+export default HomeScreen;

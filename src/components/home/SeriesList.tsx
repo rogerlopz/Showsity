@@ -1,9 +1,9 @@
-import {Button, FlatList, Text, View} from 'react-native';
-import ShowListItem from './ShowListItem.tsx';
+import {Button, FlatList, StyleSheet, Text, View} from 'react-native';
+import SeriesPosterItem from './SeriesPosterItem.tsx';
 import {useState} from 'react';
 import {useGetShowsQuery} from '../../services/shows.ts';
 
-export default function ShowList({isSearching}: {isSearching: boolean}) {
+function SeriesList({isSearching}: {isSearching: boolean}) {
   const [page, setPage] = useState(0);
   const {data, isLoading, isError} = useGetShowsQuery(page);
 
@@ -28,10 +28,12 @@ export default function ShowList({isSearching}: {isSearching: boolean}) {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         data={data}
-        renderItem={({item}) => <ShowListItem show={item} key={item.name} />}
+        renderItem={({item}) => (
+          <SeriesPosterItem show={item} key={item.name} />
+        )}
         numColumns={2}
       />
 
@@ -52,3 +54,12 @@ export default function ShowList({isSearching}: {isSearching: boolean}) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#282828',
+    flex: 1,
+  },
+});
+
+export default SeriesList;

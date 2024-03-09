@@ -1,9 +1,16 @@
-import {Button, StyleSheet, TextInput, View} from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useState} from 'react';
 import SeriesSearchResults from './SeriesSearchResults.tsx';
 import useDebounce from '../../hooks/useDebounce.tsx';
+import {ArrowLeftIcon} from 'react-native-heroicons/outline';
 
-export default function SearchShowList({onSearchToggled}) {
+export default function SearchSeriesList({onSearchToggled}) {
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState('');
   const debouncedSearch = useDebounce(searchText, 500);
@@ -27,12 +34,12 @@ export default function SearchShowList({onSearchToggled}) {
     }
 
     return (
-      <Button
-        title="Back"
+      <TouchableOpacity
         onPress={() => {
           toggleSearch(false);
-        }}
-      />
+        }}>
+        <ArrowLeftIcon color="black" />
+      </TouchableOpacity>
     );
   }
 
@@ -50,7 +57,9 @@ export default function SearchShowList({onSearchToggled}) {
         {renderBackButton()}
 
         <TextInput
+          style={styles.searchInput}
           value={searchText}
+          placeholderTextColor="#000"
           placeholder="Search by TV Show name"
           onPressIn={() => toggleSearch(true)}
           onChangeText={searchShow}
@@ -64,7 +73,12 @@ export default function SearchShowList({onSearchToggled}) {
 
 const styles = StyleSheet.create({
   searchInputContainer: {
-    padding: 8,
+    margin: 8,
     flexDirection: 'row',
+    borderWidth: 1,
+    alignItems: 'center',
+  },
+  searchInput: {
+    flex: 1,
   },
 });
