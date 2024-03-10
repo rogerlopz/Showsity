@@ -10,8 +10,18 @@ import {
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import {XCircleIcon} from 'react-native-heroicons/solid';
+import {Episode} from '../../services/types.ts';
 
-const EpisodeDetailsModal = ({episode, modalVisible, onCloseModal}) => {
+type EpisodeDetailsModalProps = {
+  episode?: Episode | null;
+  modalVisible: boolean;
+  onCloseModal(): void;
+};
+const EpisodeDetailsModal: React.FC<EpisodeDetailsModalProps> = ({
+  episode,
+  modalVisible,
+  onCloseModal,
+}) => {
   if (!episode) {
     return null;
   }

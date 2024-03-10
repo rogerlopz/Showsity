@@ -1,7 +1,10 @@
 import {StyleSheet, Text, View} from 'react-native';
 
-function GenrePillList({genres}: {genres: string[]}) {
-  if (!genres.length) {
+type GenrePillListProps = {
+  genres?: string[];
+};
+const GenrePillList: React.FC<GenrePillListProps> = ({genres}) => {
+  if (!genres || !genres.length) {
     return null;
   }
 
@@ -14,7 +17,7 @@ function GenrePillList({genres}: {genres: string[]}) {
       ))}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

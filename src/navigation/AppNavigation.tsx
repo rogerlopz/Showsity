@@ -1,9 +1,28 @@
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, RouteProp} from '@react-navigation/native';
 import HomeScreen from '../screens/home/HomeScreen.tsx';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 import SeriesDetailsScreen from '../screens/series/SeriesDetailsScreen.tsx';
 
-const Stack = createNativeStackNavigator();
+export type StackNavigatorParams = {
+  Home: undefined;
+  ShowDetails: {seriesId: number};
+};
+
+// useNavigation props for series details screen
+export type ShowDetailsNavigationProp = NativeStackNavigationProp<
+  StackNavigatorParams,
+  'ShowDetails'
+>;
+
+export type DetailsScreenRouteProp = RouteProp<
+  StackNavigatorParams,
+  'ShowDetails'
+>;
+
+const Stack = createNativeStackNavigator<StackNavigatorParams>();
 export default function AppNavigation() {
   return (
     <NavigationContainer>

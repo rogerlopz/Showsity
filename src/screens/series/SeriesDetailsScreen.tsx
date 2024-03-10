@@ -14,14 +14,16 @@ import HTMLView from 'react-native-htmlview';
 import SeriesSeasonList from '../../components/showDetails/SeriesSeasonList.tsx';
 import GenrePillList from '../../components/GenrePillList.tsx';
 import {StarIcon} from 'react-native-heroicons/solid';
+import {DetailsScreenRouteProp} from '../../navigation/AppNavigation.tsx';
 
 const viewHeight: number = Dimensions.get('window').height;
-function SeriesDetailsScreen(): React.JSX.Element {
-  const route = useRoute();
+
+const SeriesDetailsScreen: React.FC = () => {
+  const route = useRoute<DetailsScreenRouteProp>();
   const navigation = useNavigation();
   const {data, isLoading, isError} = useGetShowByIdQuery(route.params.seriesId);
 
-  if (isLoading) {
+  if (isLoading || !data) {
     return (
       <View style={styles.centerContainer}>
         <ActivityIndicator color="white" size={30} />
@@ -40,9 +42,7 @@ function SeriesDetailsScreen(): React.JSX.Element {
     );
   }
 
-  if (data) {
-    navigation.setOptions({title: data.name || ''});
-  }
+  navigation.setOptions({title: data.name || ''});
 
   return (
     <ScrollView style={styles.detailsContainer}>
@@ -85,7 +85,7 @@ function SeriesDetailsScreen(): React.JSX.Element {
       </View>
     </ScrollView>
   );
-}
+};
 
 export default SeriesDetailsScreen;
 

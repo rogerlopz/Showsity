@@ -6,8 +6,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {Episode} from '../../services/types.ts';
 
-function EpisodeList({episodes, onEpisodePress}) {
+type EpisodeListProps = {
+  episodes: Episode[];
+  onEpisodePress(episode: Episode): void;
+};
+const EpisodeList: React.FC<EpisodeListProps> = ({
+  episodes,
+  onEpisodePress,
+}) => {
   return (
     <FlatList
       data={episodes}
@@ -35,7 +43,7 @@ function EpisodeList({episodes, onEpisodePress}) {
       )}
     />
   );
-}
+};
 
 const styles = StyleSheet.create({
   episodeContainer: {

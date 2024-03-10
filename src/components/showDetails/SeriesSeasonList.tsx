@@ -1,24 +1,29 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import EpisodeList from './EpisodeList.tsx';
 import EpisodeDetailsModal from './EpisodeDetailsModal.tsx';
 import {useState} from 'react';
+import {Episode, SeasonsWithEpisodes} from '../../services/types.ts';
 
-function SeriesSeasonList({seasons}: {seasons: []}) {
+type SeriesSeasonList = {
+  seasons: SeasonsWithEpisodes[];
+};
+
+const SeriesSeasonList: React.FC<SeriesSeasonList> = ({seasons}) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [episode, setEpisode] = useState(null);
+  const [selectedEpisode, setSelectedEpisode] = useState<Episode | null>();
 
   if (!seasons || !seasons.length) {
     return null;
   }
 
-  function handleEpisodePress(episode) {
-    setEpisode(episode);
+  function handleEpisodePress(episode: Episode) {
+    setSelectedEpisode(episode);
     setModalVisible(true);
   }
 
   function handleModalClose() {
     setModalVisible(false);
-    setEpisode(null);
+    setSelectedEpisode(null);
   }
 
   return (
@@ -31,19 +36,19 @@ function SeriesSeasonList({seasons}: {seasons: []}) {
 
           <EpisodeList
             episodes={episodes}
-            onEpisodePress={handleEpisodePress}
+            onEpisodePress={episode => handleEpisodePress(episode)}
           />
         </View>
       ))}
 
       <EpisodeDetailsModal
-        episode={episode}
+        episode={selectedEpisode}
         modalVisible={modalVisible}
         onCloseModal={handleModalClose}
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

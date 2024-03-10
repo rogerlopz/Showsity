@@ -1,24 +1,29 @@
 import {api} from './api';
+import {Show} from './types.ts';
 
 export const showsApi = api.injectEndpoints({
   endpoints: builder => ({
-    getShows: builder.query({
+    getShows: builder.query<Show[], number>({
       query: (page = 0) => `/shows?page=${page}`,
     }),
-    getShowById: builder.query({
-      query: showId => `/shows/${showId}?embed[]=seasons&embed[]=episodes`,
-      transformResponse: (response: any) => {
-        const seasons = response._embedded.seasons;
-        const episodes = response._embedded.episodes;
+    getShowById: builder.query<Show, number>({
+      query: showId => ({
+        url: `/shows/${showId}?embed[]=seasons&embed[]=episodes`,
+      }),
+      transformResponse: (response: Show) => {
+        const seasons = response._embedded?.seasons || [];
+        const episodes = response._embedded?.episodes || [];
         const seasonsWithEpisodes = [];
 
-        for (let i = 0; i < seasons.length; i++) {
-          seasonsWithEpisodes.push({
-            season: seasons[i],
-            episodes: episodes.filter(
-              episode => episode.season === seasons[i].number,
-            ),
-          });
+        if (seasons.length && episodes.length) {
+          for (let i = 0; i < seasons.length; i++) {
+            seasonsWithEpisodes.push({
+              season: seasons[i],
+              episodes: episodes.filter(
+                episode => episode.season === seasons[i].number,
+              ),
+            });
+          }
         }
 
         return {
@@ -29,7 +34,7 @@ export const showsApi = api.injectEndpoints({
         };
       },
     }),
-    getShowsBySearch: builder.query({
+    getShowsBySearch: builder.query<Show[], string>({
       query: search => `/search/shows?q=${encodeURI(search)}`,
     }),
   }),

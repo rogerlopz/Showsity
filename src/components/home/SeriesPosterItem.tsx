@@ -6,9 +6,10 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {ShowDetailsNavigationProp} from '../../navigation/AppNavigation.tsx';
 
 const SeriesPosterItem: React.FC<any> = ({show}) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<ShowDetailsNavigationProp>();
   const goToShowDetails = () => {
     navigation.navigate('ShowDetails', {seriesId: show.id});
   };
