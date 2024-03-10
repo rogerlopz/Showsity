@@ -11,6 +11,7 @@ const SearchSeries: React.FC<SearchSeriesListProps> = ({onSearchToggled}) => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState('');
   const debouncedSearch = useDebounce(searchText, 500);
+
   function searchShow(text: string) {
     setSearchText(text);
   }

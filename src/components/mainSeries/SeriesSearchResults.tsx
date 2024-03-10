@@ -1,13 +1,9 @@
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import SeriesItem from './SeriesItem.tsx';
 import {useGetShowsBySearchQuery} from '../../services/shows.ts';
 import React from 'react';
+import CenterLoadingIndicator from '../common/CenterLoadingIndicator.tsx';
+import CenterErrorMessage from '../common/CenterErrorMessage.tsx';
 
 type SeriesSearchResultsProps = {
   searchText: string;
@@ -18,23 +14,12 @@ const SeriesSearchResults: React.FC<SeriesSearchResultsProps> = ({
   const {data, isLoading, isError} = useGetShowsBySearchQuery(searchText);
 
   if (isLoading) {
-    return (
-      <View style={styles.centeredContainer}>
-        <ActivityIndicator color="white" size={30} />
-        <Text style={[styles.text, styles.seriesStateText]}>
-          Searching for shows...
-        </Text>
-      </View>
-    );
+    return <CenterLoadingIndicator loadingText="Searching for shows..." />;
   }
 
   if (isError) {
     return (
-      <View style={styles.centeredContainer}>
-        <Text style={[styles.text, styles.seriesStateText]}>
-          Whoops, looks like something went wrong. Try refreshing
-        </Text>
-      </View>
+      <CenterErrorMessage text="Whoops, looks like something went wrong." />
     );
   }
 
