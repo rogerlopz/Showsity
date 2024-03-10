@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {ShowDetailsNavigationProp} from '../../navigation/AppNavigation.tsx';
+import {ShowDetailsNavigationProp} from '../../navigation/types.ts';
 
 const SeriesPosterItem: React.FC<any> = ({show}) => {
   const navigation = useNavigation<ShowDetailsNavigationProp>();

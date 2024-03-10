@@ -2,7 +2,7 @@ import {useState} from 'react';
 import SeriesList from '../../components/home/SeriesList.tsx';
 import SearchSeriesList from '../../components/home/SearchSeriesList.tsx';
 
-function HomeScreen() {
+const MainSeriesScreen: React.FC = () => {
   const [isSearchingShow, setIsSearchingShow] = useState(false);
 
   return (
@@ -14,6 +14,6 @@ function HomeScreen() {
       <SeriesList isSearching={isSearchingShow} />
     </>
   );
-}
+};
 
-export default HomeScreen;
+export default MainSeriesScreen;

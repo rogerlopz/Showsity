@@ -14,7 +14,7 @@ import HTMLView from 'react-native-htmlview';
 import SeriesSeasonList from '../../components/showDetails/SeriesSeasonList.tsx';
 import GenrePillList from '../../components/GenrePillList.tsx';
 import {StarIcon} from 'react-native-heroicons/solid';
-import {DetailsScreenRouteProp} from '../../navigation/AppNavigation.tsx';
+import {DetailsScreenRouteProp} from '../../navigation/types.ts';
 
 const viewHeight: number = Dimensions.get('window').height;
 
