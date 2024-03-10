@@ -1,3 +1,4 @@
+import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import EpisodeList from './EpisodeList.tsx';
 import EpisodeDetailsModal from './EpisodeDetailsModal.tsx';

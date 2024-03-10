@@ -108,3 +108,8 @@ export interface Show {
   _links: Links;
   _embedded?: Embedded;
 }
+
+export interface SearchShow {
+  score: number;
+  show: Show;
+}

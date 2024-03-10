@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
-  ActivityIndicator,
   Dimensions,
   Image,
   ScrollView,
@@ -11,10 +10,12 @@ import {
 import {useGetShowByIdQuery} from '../../services/shows.ts';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import HTMLView from 'react-native-htmlview';
-import SeriesSeasonList from '../../components/showDetails/SeriesSeasonList.tsx';
-import GenrePillList from '../../components/GenrePillList.tsx';
+import SeriesSeasonList from '../../components/seriesDetails/SeriesSeasonList.tsx';
+import GenrePillList from '../../components/common/GenrePillList.tsx';
 import {StarIcon} from 'react-native-heroicons/solid';
 import {DetailsScreenRouteProp} from '../../navigation/types.ts';
+import CenterLoadingIndicator from '../../components/common/CenterLoadingIndicator.tsx';
+import CenterErrorMessage from '../../components/common/CenterErrorMessage.tsx';
 
 const viewHeight: number = Dimensions.get('window').height;
 
@@ -23,26 +24,21 @@ const SeriesDetailsScreen: React.FC = () => {
   const navigation = useNavigation();
   const {data, isLoading, isError} = useGetShowByIdQuery(route.params.seriesId);
 
+  useEffect(() => {
+    if (data) {
+      navigation.setOptions({title: data.name || ''});
+    }
+  }, [data, navigation]);
+
   if (isLoading || !data) {
-    return (
-      <View style={styles.centerContainer}>
-        <ActivityIndicator color="white" size={30} />
-        <Text style={styles.text}>Loading show details...</Text>
-      </View>
-    );
+    return <CenterLoadingIndicator loadingText="Loading Series Details..." />;
   }
 
   if (isError) {
     return (
-      <View style={styles.centerContainer}>
-        <Text style={styles.text}>
-          Whoops, looks like something went wrong. Try refreshing
-        </Text>
-      </View>
+      <CenterErrorMessage text="Whoops, looks like something went wrong." />
     );
   }
-
-  navigation.setOptions({title: data.name || ''});
 
   return (
     <ScrollView style={styles.detailsContainer}>

@@ -1,3 +1,4 @@
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import MainSeriesScreen from '../screens/series/MainSeriesScreen.tsx';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';

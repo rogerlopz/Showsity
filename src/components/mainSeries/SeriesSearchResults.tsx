@@ -5,7 +5,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import SeriesPosterItem from './SeriesPosterItem.tsx';
+import SeriesItem from './SeriesItem.tsx';
 import {useGetShowsBySearchQuery} from '../../services/shows.ts';
 import React from 'react';
 
@@ -52,7 +52,7 @@ const SeriesSearchResults: React.FC<SeriesSearchResultsProps> = ({
           </View>
         }
         renderItem={({item}) => (
-          <SeriesPosterItem show={item.show} key={item.show.name} />
+          <SeriesItem show={item.show} key={item.show.name} />
         )}
       />
     </View>

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   FlatList,
   Image,
@@ -16,11 +17,15 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
   episodes,
   onEpisodePress,
 }) => {
+  function episodeSeparator() {
+    return <View style={styles.separator} />;
+  }
+
   return (
     <FlatList
       data={episodes}
       horizontal
-      ItemSeparatorComponent={() => <View style={{width: 16}}></View>}
+      ItemSeparatorComponent={episodeSeparator}
       renderItem={({item}) => (
         <TouchableOpacity
           key={`${item.name}`}
@@ -51,6 +56,9 @@ const styles = StyleSheet.create({
     minWidth: 170,
     height: 160,
     maxHeight: 200,
+  },
+  separator: {
+    width: 8,
   },
   episodeInformation: {
     flex: 1,

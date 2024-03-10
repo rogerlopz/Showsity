@@ -1,13 +1,14 @@
+import React from 'react';
 import {useState} from 'react';
-import SeriesList from '../../components/home/SeriesList.tsx';
-import SearchSeriesList from '../../components/home/SearchSeriesList.tsx';
+import SeriesList from '../../components/mainSeries/SeriesList.tsx';
+import SearchSeries from '../../components/mainSeries/SearchSeries.tsx';
 
 const MainSeriesScreen: React.FC = () => {
   const [isSearchingShow, setIsSearchingShow] = useState(false);
 
   return (
     <>
-      <SearchSeriesList
+      <SearchSeries
         onSearchToggled={toggleStatus => setIsSearchingShow(toggleStatus)}
       />
 

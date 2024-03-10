@@ -1,5 +1,5 @@
 import {api} from './api';
-import {Show} from './types.ts';
+import {SearchShow, Show} from './types.ts';
 
 export const showsApi = api.injectEndpoints({
   endpoints: builder => ({
@@ -34,7 +34,7 @@ export const showsApi = api.injectEndpoints({
         };
       },
     }),
-    getShowsBySearch: builder.query<Show[], string>({
+    getShowsBySearch: builder.query<SearchShow[], string>({
       query: search => `/search/shows?q=${encodeURI(search)}`,
     }),
   }),

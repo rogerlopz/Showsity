@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   ImageBackground,
   StyleSheet,
@@ -8,7 +9,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {ShowDetailsNavigationProp} from '../../navigation/types.ts';
 
-const SeriesPosterItem: React.FC<any> = ({show}) => {
+const SeriesItem: React.FC<any> = ({show}) => {
   const navigation = useNavigation<ShowDetailsNavigationProp>();
   const goToShowDetails = () => {
     navigation.navigate('ShowDetails', {seriesId: show.id});
@@ -18,7 +19,7 @@ const SeriesPosterItem: React.FC<any> = ({show}) => {
     <TouchableOpacity style={styles.container} onPress={goToShowDetails}>
       <ImageBackground
         src={show.image?.medium}
-        imageStyle={[styles.posterImage, {resizeMode: 'cover'}]}
+        imageStyle={styles.posterImage}
         style={styles.backgroundPoster}>
         <View style={styles.titleBlur}>
           <Text style={styles.seriesTitle}>{show.name}</Text>
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
   },
   posterImage: {
     borderRadius: 16,
+    resizeMode: 'cover',
   },
   seriesTitle: {
     marginLeft: 16,
@@ -61,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SeriesPosterItem;
+export default SeriesItem;

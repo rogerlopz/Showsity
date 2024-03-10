@@ -1,5 +1,5 @@
+import React, {useState} from 'react';
 import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
-import {useState} from 'react';
 import SeriesSearchResults from './SeriesSearchResults.tsx';
 import useDebounce from '../../hooks/useDebounce.tsx';
 import {ArrowLeftIcon} from 'react-native-heroicons/outline';
@@ -7,9 +7,7 @@ import {ArrowLeftIcon} from 'react-native-heroicons/outline';
 type SearchSeriesListProps = {
   onSearchToggled(toggleStatus: boolean): void;
 };
-const SearchSeriesList: React.FC<SearchSeriesListProps> = ({
-  onSearchToggled,
-}) => {
+const SearchSeries: React.FC<SearchSeriesListProps> = ({onSearchToggled}) => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState('');
   const debouncedSearch = useDebounce(searchText, 500);
@@ -102,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchSeriesList;
+export default SearchSeries;
